@@ -4,8 +4,11 @@ class decipher {
     public static void main(String args []) {
         String toDecypher = "KUHPVIBQKVOSHWHXBPOFUXHRPVLLDDWVOSKWPREDDVVIDWQRBHBGLLBBPKQUNRVOHQEIRLWOKKRDD";
         ArrayList<Integer> asciiNums = new ArrayList<Integer> ();
+        
+        
         ArrayList<Integer> tester = new ArrayList<Integer> ();
         ArrayList<Integer> tester2 = new ArrayList<Integer> ();
+        ArrayList<Integer> tester3 = new ArrayList<Integer> ();
 
         ArrayList<String> charList = new ArrayList<String> ();
         String test = "ABCZ";
@@ -13,22 +16,27 @@ class decipher {
         //columnar transposition
         //simple shift substitution
         //asciiNums = convertToASCII(toDecypher);
-        //charList = convertToChar(asciiNums);
 
+        
         tester = convertToASCII(test);
-        tester2 = encoder(tester, 1);
+        tester2 = shifter(tester, 1);
+        charList = convertToChar(tester2);
 
-        /*String shiftedBack = "";
-        int shiftNum;
-        for (int i = 0; i < 26; i++) {
-            for (int j = 0; j < toDecypher.length(); j++) {
-                shiftNum = ( + );
-                shiftedBack = shiftedBack.concat("");
+        tester3 = unShifter(tester, 1);
+        charList = convertToChar(tester3);
+        
+        ArrayList<Integer> shifted = new ArrayList<Integer> ();
+
+        for (int i = 1; i < 27; i++) {
+            shifted = shifter(asciiNums, i);
+            for (int j = 0; j < shifted.size(); j++) {
+                //column method
             }
-        }*/
+            shifted.clear(); //empty the shifted list before shifting again
+        }
     }
 
-    static ArrayList<Integer> encoder (ArrayList<Integer> asciiNums, int shiftBy) {
+    static ArrayList<Integer> shifter (ArrayList<Integer> asciiNums, int shiftBy) {
         ArrayList<Integer> encoded = new ArrayList<Integer> ();
 
         for (int i = 0; i < asciiNums.size(); i++) {
@@ -36,6 +44,21 @@ class decipher {
             encoded.add(changed);
             System.out.println(encoded.get(i));
         }
+        System.out.println();
+
+        return encoded;
+    }
+
+    static ArrayList<Integer> unShifter (ArrayList<Integer> asciiNums, int shiftBy) {
+        ArrayList<Integer> encoded = new ArrayList<Integer> ();
+
+        for (int i = 0; i < asciiNums.size(); i++) {
+            int changed = (asciiNums.get(i) - shiftBy) % 26;
+            changed = changed + shiftBy; //the unshifted version was always off by the shiftBy amount...still not sure why
+            encoded.add(changed);
+            System.out.println(encoded.get(i));
+        }
+        System.out.println();
 
         return encoded;
     }
@@ -49,7 +72,8 @@ class decipher {
             asciiCodes.add(toAdd);
             System.out.println(asciiCodes.get(i));
         }
-        
+        System.out.println();
+        //this is a test comment
         return asciiCodes;
     }
 
@@ -63,6 +87,8 @@ class decipher {
             charList.add(String.valueOf(toAdd));
             System.out.println(charList.get(i));
         }
+        System.out.println();
+
         return charList;
     }
 }
